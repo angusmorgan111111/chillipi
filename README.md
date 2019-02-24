@@ -13,6 +13,7 @@ Install with `apt-get install`:
 Install with `pip3 install`:
 
  * flask
+ * Flask-APScheduler
  * gunicorn
 
 ## Setup

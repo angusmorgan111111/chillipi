@@ -1,0 +1,23 @@
+<html>
+    <head>
+        <title>{{ title }}</title>
+    </head>
+
+    <body>
+        <h1>chillipi</h1>
+
+        <table>
+            <tr>
+                <th>Time</th>
+                <th>pH</th>
+            </tr>
+
+            {% for reading in readings %}
+            <tr>
+                <td>{{ reading['time'].strftime('%H:%M:%S') }}</td>
+                <td>{{ '{0:05.2f}'.format(reading['ph']) }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </body>
+</html>
