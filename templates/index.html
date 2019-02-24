@@ -1,23 +1,17 @@
-<html>
-    <head>
-        <title>{{ title }}</title>
-    </head>
+{% extends "base.html" %}
 
-    <body>
-        <h1>chillipi</h1>
+{% block content %}
+<table>
+    <tr>
+        <th>Time</th>
+        <th>pH</th>
+    </tr>
 
-        <table>
-            <tr>
-                <th>Time</th>
-                <th>pH</th>
-            </tr>
-
-            {% for reading in readings %}
-            <tr>
-                <td>{{ reading['time'].strftime('%H:%M:%S') }}</td>
-                <td>{{ '{0:05.2f}'.format(reading['ph']) }}</td>
-            </tr>
-            {% endfor %}
-        </table>
-    </body>
-</html>
+    {% for reading in readings %}
+    <tr>
+        <td>{{ reading['time'].strftime('%H:%M:%S') }}</td>
+        <td>{{ '{0:05.2f}'.format(reading['ph']) }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}
