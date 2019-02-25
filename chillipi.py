@@ -22,9 +22,15 @@ def read_ph():
 
 
 @app.route("/")
-def hello():
+def index():
     readings = database.get_readings(20)
-    return render_template('index.html', title='chillipi', readings=readings)
+    return render_template('index.html', title='Dashboard | chillipi',
+            readings=readings)
+
+
+@app.route("/settings")
+def settings():
+    return render_template('settings.html', title='Settings | chillipi')
 
 
 @app.teardown_appcontext
