@@ -32,6 +32,8 @@ Install with `pip3 install`:
 
 As root: `systemctl [start|restart|stop] chillipi`
 
+When chillipi is running it will be available on port 5000.
+
 ## Development
 
 Mount the chillipi directory using Samba - all files then stay local to the pi.
