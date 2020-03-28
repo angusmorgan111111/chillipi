@@ -17,10 +17,16 @@ Install with `pip3 install`:
 
 ## Setup
 
- * Create a systemd unit file and enable it on startup
-   * (chillipi is started with `flask run`)
+ * Create a `chillipi` user
 
- * Allow non-root access to hardware peripherals
+ * Allow the `chillipi` user access to the hardware peripherals
+
+ * Clone this repository into `/opt/chillipi` and give the `chillipi` user full
+   access to it
+
+ * Copy `chillipi.service` into `/etc/systemd/system/`
+
+ * Reload the systemd cache, start chillipi and enable it on startup
 
 ## Usage
 
