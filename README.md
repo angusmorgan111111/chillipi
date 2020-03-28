@@ -6,7 +6,6 @@ Install with `apt-get install`:
 
  * python3
  * pip3
- * nginx
 
 ## Pip dependencies
 
@@ -14,16 +13,12 @@ Install with `pip3 install`:
 
  * flask
  * Flask-APScheduler
- * gunicorn
+ * python-dotenv
 
 ## Setup
 
- * Configure nginx as a proxy for chillipi to port 8000
-
- * Set up SSL certificate management with Let's Encrypt
-
  * Create a systemd unit file and enable it on startup
-   * (chillipi is started with `gunicorn3 chillipi:app`)
+   * (chillipi is started with `flask run`)
 
  * Allow non-root access to hardware peripherals
 
@@ -35,7 +30,7 @@ As root: `systemctl [start|restart|stop] chillipi`
 
 Mount the chillipi directory using Samba - all files then stay local to the pi.
 
-chillipi must be restarted to pick up new changes to files.
+chillipi will pick up code changes as they are made.
 
 ### Visual Studio Code
 

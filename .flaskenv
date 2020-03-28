@@ -1,0 +1,2 @@
+FLASK_APP=chillipi
+FLASK_ENV=development
