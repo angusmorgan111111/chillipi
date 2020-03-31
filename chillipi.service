@@ -8,4 +8,4 @@ WantedBy=multi-user.target
 
 [Service]
 WorkingDirectory=/opt/chillipi
-ExecStart=flask run
+ExecStart=flask run --network=0.0.0.0
