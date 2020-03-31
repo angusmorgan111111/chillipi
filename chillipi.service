@@ -1,11 +1,11 @@
 [Unit]
 Wants=network-online.target
-After=network-online.target
-User=chillipi
 
 [Install]
 WantedBy=multi-user.target
 
 [Service]
+User=chillipi
+Group=chillipi
 WorkingDirectory=/opt/chillipi
-ExecStart=flask run --network=0.0.0.0
+ExecStart=/usr/local/bin/flask run --host=0.0.0.0
