@@ -18,18 +18,17 @@ def get_readings(limit):
     db = get_db()
     c = db.cursor()
 
-    return c.execute('''select time, ph from ph_readings
+    return c.execute('''select time, ph, ec, tds from readings
         order by time desc limit ?''', (limit,))
 
 
-def add_reading():
+def add_reading(ph, ec, tds):
     time = datetime.datetime.now()
-    ph = round(random.uniform(0, 14), 1)
     db = get_db()
     c = db.cursor()
 
-    c.execute('''insert into ph_readings
-        values(?, ?)''', (time, ph))
+    c.execute('''insert into readings
+        values(?, ?, ?, ?)''', (time, ph, ec, tds))
 
     db.commit()
 

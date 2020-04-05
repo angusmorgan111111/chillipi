@@ -1,7 +1,7 @@
 from flask import Flask, g, render_template
 from flask_apscheduler import APScheduler
 
-import database
+import database, sensor
 
 app = Flask(__name__)
 scheduler = APScheduler()
@@ -15,17 +15,18 @@ def setup():
     scheduler.start()
 
 
-@scheduler.task('interval', id='read_ph', seconds=1)
-def read_ph():
+@scheduler.task('interval', id='read_sensors', seconds=10)
+def read_sensors():
     with app.app_context():
-        database.add_reading()
+        ph = sensor.read_ph()
+        ec_all = sensor.read_ec().split(',')
+        database.add_reading(ph, ec_all[0], ec_all[1])
 
 
 @app.route("/")
 def index():
-    readings = database.get_readings(20)
-    return render_template('index.html', title='Dashboard | chillipi',
-            readings=readings)
+    readings = database.get_readings(10)
+    return render_template('index.html', title='Dashboard | chillipi', readings=readings)
 
 
 @app.route("/settings")

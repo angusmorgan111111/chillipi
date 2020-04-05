@@ -1,19 +1,24 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h4>pH readings</h4>
+<h4>Readings</h4>
 
 <table class="table table-sm table-striped">
     <tr>
         <th>Time</th>
         <th>pH</th>
+        <th>ec</th>
+        <th>tds</th>
     </tr>
 
     {% for reading in readings %}
     <tr>
         <td>{{ reading['time'].strftime('%H:%M:%S') }}</td>
-        <td>{{ '{0:05.2f}'.format(reading['ph']) }}</td>
+        <td>{{(reading['ph']) }}</td>
+        <td>{{(reading['ec']) }}</td>
+        <td>{{(reading['tds']) }}</td>
     </tr>
     {% endfor %}
 </table>
+
 {% endblock %}
