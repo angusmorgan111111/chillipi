@@ -33,6 +33,21 @@ def add_reading(ph, ec, tds):
     db.commit()
 
 
+def get_schedule(output):
+    db = get_db()
+    c = db.cursor()
+
+    return c.execute('''select day, time, command from output_schedule
+        where output=? order by day asc, time asc''', (output,))
+
+
+def get_pin(output):
+    db = get_db()
+    c = db.cursor()
+
+    return c.execute('''select pin from output_mappings where output=?''', (output,)).fetchone()['pin']
+
+
 def init(app):
     with app.app_context():
         db = get_db()

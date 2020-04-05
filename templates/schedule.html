@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h4>Schedule</h4>
+
+<table class="table table-sm table-striped">
+    <tr>
+        <th>Day</th>
+        <th>Time</th>
+        <th>Command</th>
+    </tr>
+
+    {% for row in schedule %}
+    <tr>
+        <td>{{ row['day'] }}</td>
+        <td>{{ row['time'] }}</td>
+        <td>{{ row['command'] }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}
