@@ -18,7 +18,7 @@ def setup():
 @scheduler.task('interval', id='read_sensors', seconds=10)
 def read_sensors():
     with app.app_context():
-        ph = sensor.read_ph()
+        ph = sensor.read_ph().rstrip('\x00')
         ec_all = sensor.read_ec().split(',')
         database.add_reading(ph, ec_all[0], ec_all[1])
 
