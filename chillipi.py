@@ -1,7 +1,7 @@
 from flask import Flask, g, render_template
-from flask_apscheduler import APScheduler
+from flask_apscheduler import APScheduler 
 
-import database, output_scheduler, sensor
+import database, output_scheduler, sensor, util
 
 app = Flask(__name__)
 scheduler = APScheduler()
@@ -17,7 +17,7 @@ def setup():
 
 @scheduler.task('interval', id='read_sensors', seconds=10)
 def read_sensors():
-    with app.app_context():
+    with app.app_context():      
         ph = sensor.read_ph().rstrip('\x00')
         ec_all = sensor.read_ec().split(',')
         database.add_reading(ph, ec_all[0], ec_all[1])
@@ -26,9 +26,13 @@ def read_sensors():
 @app.route("/schedule")
 def schedule():
     with app.app_context():
-        pin = database.get_pin(0)
-        schedule = database.get_schedule(0)
-        return output_scheduler.apply_outputs(schedule, pin)
+        for entry in database.get_outputs():
+            pin = entry['pin']
+            schedule = database.get_schedule(pin)
+            util.log(output_scheduler.apply_outputs(schedule, pin))
+        
+        return 'hello'    
+        
         # return render_template('schedule.html', title='Schedule | chillipi', schedule=schedule)
         
 

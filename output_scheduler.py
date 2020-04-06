@@ -8,15 +8,13 @@ def apply_outputs(schedule, pin):
 
     s = ''
 
-    command_list = schedule.fetchall()
-
-    for i in range(len(command_list)):
-        if current_day < command_list[i]['day'] or (current_day == command_list[i]['day'] and current_time < command_list[i]['time']):
+    for i in range(len(schedule)):
+        if current_day < schedule[i]['day'] or (current_day == schedule[i]['day'] and current_time < schedule[i]['time']):
 
             if i == 0:
-                row = command_list[len(command_list) - 1]
+                row = schedule[len(schedule) - 1]
             else:
-                row = command_list[i - 1]
+                row = schedule[i - 1]
 
             if row['command'] == 'on':
                 pinset.pin_on(pin)

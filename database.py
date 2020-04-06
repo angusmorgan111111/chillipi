@@ -14,11 +14,21 @@ def get_db():
     return db
 
 
-def get_readings(limit):
-    db = get_db()
-    c = db.cursor()
+def query_db(query, args=(), one=False):
+    cur = get_db().execute(query, args)
+    rv = cur.fetchall()
+    cur.close()
+    return (rv[0] if rv else None) if one else rv
 
-    return c.execute('''select time, ph, ec, tds from readings
+
+def write_db(query, args=()):
+    cur = get_db().execute(query, args)
+    get_db().commit()
+    cur.close()
+
+
+def get_readings(limit):
+    return query_db('''select time, ph, ec, tds from readings
         order by time desc limit ?''', (limit,))
 
 
@@ -27,25 +37,22 @@ def add_reading(ph, ec, tds):
     db = get_db()
     c = db.cursor()
 
-    c.execute('''insert into readings
+    write_db('''insert into readings
         values(?, ?, ?, ?)''', (time, ph, ec, tds))
-
-    db.commit()
 
 
 def get_schedule(output):
-    db = get_db()
-    c = db.cursor()
-
-    return c.execute('''select day, time, command from output_schedule
+    return query_db('''select day, time, command from output_schedule
         where output=? order by day asc, time asc''', (output,))
 
 
 def get_pin(output):
-    db = get_db()
-    c = db.cursor()
+    return query_db('''select pin from output_mappings where
+        output=?''', (output,)).fetchone()['pin']
 
-    return c.execute('''select pin from output_mappings where output=?''', (output,)).fetchone()['pin']
+
+def get_outputs():
+    return query_db('''select pin, output from output_mappings''')
 
 
 def init(app):
