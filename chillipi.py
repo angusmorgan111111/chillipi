@@ -1,7 +1,7 @@
 from flask import Flask, g, render_template
 from flask_apscheduler import APScheduler 
 
-import database, output_scheduler, sensor, util
+import database, output_scheduler, sensor, util, datetime
 
 app = Flask(__name__)
 scheduler = APScheduler()
@@ -23,29 +23,39 @@ def read_sensors():
         database.add_reading(ph, ec_all[0], ec_all[1])
 
 
-@app.route("/schedule")
-def schedule():
+@scheduler.task('interval', id='apply_schedule', seconds=1)
+def apply_schedule():
     with app.app_context():
         for entry in database.get_outputs():
+            
             pin = entry['pin']
-            schedule = database.get_schedule(pin)
-            util.log(output_scheduler.apply_outputs(schedule, pin))
+            output = entry['output']
+           
+            if isinstance(pin, int):
+                schedule = database.get_schedule(output)
+                #util.log_iterable(schedule)
+                #util.log('output '+ str(output))
+                #util.log('pin ' + str(pin))
+                output_scheduler.apply_outputs(schedule, pin)
         
-        return 'hello'    
-        
-        # return render_template('schedule.html', title='Schedule | chillipi', schedule=schedule)
-        
-
-
+       
 @app.route("/")
 def index():
     readings = database.get_readings(10)
     return render_template('index.html', title='Dashboard | chillipi', readings=readings)
 
-
 @app.route("/settings")
 def settings():
-    return render_template('settings.html', title='Settings | chillipi')
+     
+    outputs = database.get_outputs()
+    schedule = database.get_schedule_all()
+    
+    yesterday = (datetime.datetime.now().weekday()-1) % 7
+       
+    
+    #util.log_iterable(schedule)
+
+    return render_template('settings.html', title='Settings | chillipi', outputs=outputs, schedule=schedule, yesterday=yesterday)
 
 
 @app.teardown_appcontext
@@ -54,3 +64,4 @@ def close_connection(exception):
 
     if db is not None:
         db.close()
+

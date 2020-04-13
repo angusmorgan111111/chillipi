@@ -51,3 +51,8 @@ Set it up as follows:
  * Intall the python plugin when prompted, then restart VS Code
  * Press Ctrl+Shift+P, type "interpreter", then select the Python 3 interpreter
  * Install the pylint plugin when prompted
+
+
+## Reading log files
+
+ journalctl -f in putty to look at log. This is writtent by util

@@ -45,6 +45,10 @@ def get_schedule(output):
     return query_db('''select day, time, command from output_schedule
         where output=? order by day asc, time asc''', (output,))
 
+def get_schedule_all():
+    return query_db('''select day, time, command, output from output_schedule
+        order by day asc, time asc''')
+
 
 def get_pin(output):
     return query_db('''select pin from output_mappings where
@@ -52,7 +56,7 @@ def get_pin(output):
 
 
 def get_outputs():
-    return query_db('''select pin, output from output_mappings''')
+    return query_db('''select pin, output, name from output_mappings''')
 
 
 def init(app):

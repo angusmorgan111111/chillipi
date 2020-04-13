@@ -1,7 +1,42 @@
 {% extends "base.html" %}
 
+
 {% block content %}
 
-<p>Nothing here yet...</p>
+<table class="table table-sm table-striped">
+    <tr>
+        <th>Output (#)</th>
+        <th>Output (name)</th>
+        <th>Command</th>
+        <th>Periodic</th>
+    </tr>
+
+    {% for output in outputs %}
+    <tr>
+        <td>{{ output['output'] }}</td>
+        <td>{{ output['name'] }}</td>
+        
+        <td>{% for command in schedule %}               
+            {% if command['output'] == output['output']%}
+                {% if command['day'] == yesterday %}
+                    <p>{{ command['command'] + '  ' + command['time'] }}</p>
+                {% endif %}
+            {% endif %}
+
+        {% endfor %}</td>
+
+      
+
+    </tr>
+    {% endfor %}
+
+  
+
+</table>
+
+
+
+
+
 
 {% endblock %}
