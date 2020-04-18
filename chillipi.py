@@ -1,7 +1,7 @@
 from flask import Flask, g, render_template
-from flask_apscheduler import APScheduler 
+from flask_apscheduler import APScheduler
 
-import database, output_scheduler, sensor, util, datetime
+import database, output_scheduler, sensor, util, datetime, web_settings
 
 app = Flask(__name__)
 scheduler = APScheduler()
@@ -46,12 +46,18 @@ def index():
     return render_template('index.html', title='Dashboard | chillipi', readings=readings)
 
 
+@app.route("/settings/change_name/<output_number>", methods=['POST'])
+def change_name(output_number):
+    web_settings.change_name(output_number)
+    
+    return settings()
 
 
-@app.route("/settings", methods=['GET', 'POST'])
+@app.route("/settings")
 def settings():
      
     outputs = database.get_outputs()
+        
     schedule = database.get_schedule_all()
     
     yesterday = (datetime.datetime.now().weekday()-1) % 7

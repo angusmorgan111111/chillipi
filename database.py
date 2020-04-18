@@ -62,7 +62,15 @@ def get_outputs():
 def add_output(output, pin, name):
       write_db('''insert into output_mappings
         values(?, ?, ?)''', (output, pin, name))
-    
+
+
+def change_name(output_number, output_name):
+        write_db('''UPDATE output_mappings
+        SET name = ? 
+        WHERE output = ?''', (output_name, output_number))
+
+
+
 
 def init(app):
     with app.app_context():
