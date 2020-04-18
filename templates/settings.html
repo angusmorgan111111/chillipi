@@ -5,7 +5,7 @@
 
 <table class="table table-sm table-striped">
     <tr>
-        <th>Output (#)</th>
+        <th>Output (#)</th>      
         <th>Output (name)</th>
         <th>Command</th>
         <th>Periodic</th>
@@ -13,9 +13,14 @@
 
     {% for output in outputs %}
     <tr>
-        <td>{{ output['output'] }}</td>
-        <td>{{ output['name'] }}</td>
-        
+        <td>{{ output['output'] }}
+            
+        </td>
+        <td>
+            <input type="text" id="output_number" value={{ output['name'] }}
+            minlength="1" maxlength="20">
+        </td>
+
         <td>{% for command in schedule %}               
             {% if command['output'] == output['output']%}
                 {% if command['day'] == yesterday %}
@@ -24,8 +29,7 @@
             {% endif %}
 
         {% endfor %}</td>
-
-      
+    
 
     </tr>
     {% endfor %}
@@ -40,3 +44,5 @@
 
 
 {% endblock %}
+
+

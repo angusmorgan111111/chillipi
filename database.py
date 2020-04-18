@@ -59,11 +59,30 @@ def get_outputs():
     return query_db('''select pin, output, name from output_mappings''')
 
 
+def add_output(output, pin, name):
+      write_db('''insert into output_mappings
+        values(?, ?, ?)''', (output, pin, name))
+    
+
 def init(app):
     with app.app_context():
         db = get_db()
 
         with app.open_resource('schema.sql', mode='r') as f:
             db.cursor().executescript(f.read())
-
+             
         db.commit()
+
+        if not get_outputs():
+            add_output(0, 20, '-')
+            add_output(1, 21, '-')
+            add_output(2, 20, '-')
+            add_output(3, 21, '-')
+            add_output(4, 20, '-')
+            add_output(5, 20, '-')
+        
+            
+
+
+
+        

@@ -8,6 +8,7 @@ scheduler = APScheduler()
 scheduler.api_enabled = True
 
 
+
 @app.before_first_request
 def setup():
     database.init(app)
@@ -44,7 +45,10 @@ def index():
     readings = database.get_readings(10)
     return render_template('index.html', title='Dashboard | chillipi', readings=readings)
 
-@app.route("/settings")
+
+
+
+@app.route("/settings", methods=['GET', 'POST'])
 def settings():
      
     outputs = database.get_outputs()
@@ -53,9 +57,8 @@ def settings():
     yesterday = (datetime.datetime.now().weekday()-1) % 7
        
     
-    #util.log_iterable(schedule)
-
     return render_template('settings.html', title='Settings | chillipi', outputs=outputs, schedule=schedule, yesterday=yesterday)
+
 
 
 @app.teardown_appcontext

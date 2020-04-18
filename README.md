@@ -56,3 +56,7 @@ Set it up as follows:
 ## Reading log files
 
  journalctl -f in putty to look at log. This is writtent by util
+
+## Default ouput mappings
+
+The init function in  [initialising the database](database.py) sets what outputs exist and their pins. The output mappings table must be deleted to refresh. 
