@@ -53,6 +53,13 @@ def change_name(output_number):
     return settings()
 
 
+@app.route("/settings/add_command/<output_number>", methods=['POST'])
+def add_command(output_number):
+    web_settings.add_command(output_number)
+    
+    return settings()
+
+
 @app.route("/settings")
 def settings():
      

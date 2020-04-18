@@ -69,7 +69,9 @@ def change_name(output_number, output_name):
         SET name = ? 
         WHERE output = ?''', (output_name, output_number))
 
-
+def add_command(output, time, command):
+      write_db('''insert into output_schedule
+        values(?, 0, ?, ?)''', (output, time, command))
 
 
 def init(app):
