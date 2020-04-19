@@ -1,4 +1,4 @@
-import datetime, random, sqlite3
+import datetime, random, sqlite3, util
 from flask import g
 
 DATABASE = 'chilli.db'
@@ -46,7 +46,7 @@ def get_schedule(output):
         where output=? order by day asc, time asc''', (output,))
 
 def get_schedule_all():
-    return query_db('''select day, time, command, output from output_schedule
+    return query_db('''select day, time, command, output, time_on, time_off from output_schedule
         order by day asc, time asc''')
 
 
@@ -69,9 +69,17 @@ def change_name(output_number, output_name):
         SET name = ? 
         WHERE output = ?''', (output_name, output_number))
 
-def add_command(output, time, command):
+def add_command(output, day, time, command, time_on, time_off):
       write_db('''insert into output_schedule
-        values(?, 0, ?, ?)''', (output, time, command))
+        values(?, ?, ?, ?, ?, ?)''', (output, day, time, command, time_on, time_off))
+
+def clear_commands(output, day):
+    
+    util.log(str(day)+ ' ' + str(output))
+    
+    write_db(''' DELETE FROM output_schedule
+        WHERE (output=? AND day = ?)''', (output, day))
+
 
 
 def init(app):

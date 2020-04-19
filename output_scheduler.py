@@ -2,6 +2,8 @@ import datetime
 import pinset
 import util
 
+
+
 def apply_outputs(schedule, pin):   
     time = datetime.datetime.now()
     current_day = time.weekday()

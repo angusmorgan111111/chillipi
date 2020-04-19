@@ -55,9 +55,18 @@ def change_name(output_number):
 
 @app.route("/settings/add_command/<output_number>", methods=['POST'])
 def add_command(output_number):
-    web_settings.add_command(output_number)
+    
+    for day in range (0, 7):
+        web_settings.add_command(day, output_number)
+   
+    for day in range (0, 7):
+        web_settings.clear_commands(day, output_number)
+    
+        
     
     return settings()
+
+
 
 
 @app.route("/settings")
