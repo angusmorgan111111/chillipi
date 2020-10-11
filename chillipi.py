@@ -34,16 +34,20 @@ def apply_schedule():
            
             if isinstance(pin, int):
                 schedule = database.get_schedule(output)
-                #util.log_iterable(schedule)
-                #util.log('output '+ str(output))
-                #util.log('pin ' + str(pin))
                 output_scheduler.apply_outputs(schedule, pin)
         
-       
+
+
 @app.route("/")
 def index():
     readings = database.get_readings(10)
     return render_template('index.html', title='Dashboard | chillipi', readings=readings)
+
+
+@app.route("/live_feed")
+def live_feed():
+  
+    return render_template('live_feed.html', title='Live Feed')
 
 
 @app.route("/settings/change_name/<output_number>", methods=['POST'])
@@ -57,10 +61,11 @@ def change_name(output_number):
 def add_command(output_number):
     
     for day in range (0, 7):
+        web_settings.clear_commands(day, output_number)
+    
+    for day in range (0, 7):
         web_settings.add_command(day, output_number)
    
-    for day in range (0, 7):
-        web_settings.clear_commands(day, output_number)
     
         
     

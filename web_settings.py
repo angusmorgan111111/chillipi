@@ -44,5 +44,6 @@ def add_command(day, output_number):
 def clear_commands(day, output_number):
     
    if 'clear_all' in request.form: 
+      util.log('clear')
       database.clear_commands(output_number, day)
      
