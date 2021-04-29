@@ -60,3 +60,28 @@ Set it up as follows:
 ## Default ouput mappings
 
 The init function in  [initialising the database](database.py) sets what outputs exist and their pins. The output mappings table must be deleted to refresh. 
+
+## jinja
+
+jinja is a templating engine. it allwos me to use variables in an html file by utting them in {{ }}
+
+an example is below where i input the title from python
+
+```
+return render_template('index.html', title='Dashboard | chillipi', readings=readings)
+```
+
+## flask
+
+i need to use pip to install flask before i can use it 
+
+flask is a web framework the below is the annotation that tells flask to send the return of the function over the nextwork to the url
+
+```
+@app.route("/")
+
+```
+
+## service
+
+chillipi.service uses systemd to configure the pi when it turns on. It starts flask then flask can call python to run as required. 
