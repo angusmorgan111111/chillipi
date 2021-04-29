@@ -23,7 +23,7 @@
             <td>
 
             <form action="/settings/change_name/{{ output['output'] }}" method="POST">
-                <input type="text" name="output_name" value={{ output['name'] }}
+                <input type="text" name="output_name" value="{{ output['name'] }}"
                 minlength="1" maxlength="20">
                 <input type="submit" value="submit">
             </form>  
