@@ -30,27 +30,32 @@ def apply_outputs(schedule, pin):
         # For each index i in the schedule list
         for i in range(len(schedule)):
 
+            
+
             # Find the first command after the current time
             if current_day < schedule[i]['day'] or (current_day == schedule[i]['day'] and current_time < schedule[i]['time']):
-
+               
                 # Then apply the command before that i.e. the
                 # most recent command before the current time
                 if i == 0:
                     row = schedule[len(schedule) - 1]
-                    
+
                 else:
                     row = schedule[i - 1]
-
-                if row['command'] == 'on':
-                    pinset.pin_on(pin)
-                    #util.log(str(pin) + ' on')
-                
-                if row['command'] == 'off':
-                    pinset.pin_off(pin)
-                    #util.log(str(pin)+' off')
-                
-                
+                             
+                apply_output(row, pin)
                 return
 
+        apply_output(schedule[len(schedule)-1], pin)
 
-            
+
+def apply_output(row, pin):
+
+    if row['command'] == 'on':
+        pinset.pin_on(pin)
+        #util.log(str(pin) + ' on')
+
+    if row['command'] == 'off':
+        pinset.pin_off(pin)
+        #util.log(str(pin)+' off')
+
